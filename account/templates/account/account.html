@@ -1,0 +1,50 @@
+{% extends 'personal/home.html' %}
+{% load static %}
+
+{% block content %}
+	<style>
+		.profile-panel{
+			background-color: white;
+			width: 90%;
+			margin-left: 4.5%;
+			height: 380px;
+			box-shadow: 5px -5px 9px rgba(0,0,0,.2),
+						-5px 5px 9px rgba(0,0,0,.2);
+		}
+
+		.profile-pic{
+			margin-left: 80px;
+			width: 80px;
+			margin-top: 270px;
+			border-radius: 50%;
+			position: absolute;
+		}
+
+		.update{
+			float: right;
+			background-color: white;
+			border: 0px;
+			border-radius: 10px;
+			height: 30px;
+			width: 100px;
+			margin-top: -10px;
+			margin-right: 25px;
+			box-shadow: 5px -5px 9px rgba(0,0,0,.2),
+						-5px 5px 9px rgba(0,0,0,.2);
+			font-family: 'Roboto', sans-serif;
+		}
+	</style>
+<div>
+	<div class="profile-panel">
+		<img style="width: 100%; height: 300px;" src="{% static 'images/bg.jpeg' %}" alt="">
+		<img class="overlay profile-pic" src="{{profile_image}}" alt="">
+		<p class="font" style="margin-left: 140px;">{{username}}</p>
+		{% if is_self %}
+		<a href="{% url 'account:edit' user_id=id %}">
+			<button class="update">Update Profile</button>
+		</a>
+		{% endif %}
+	</div>
+</div>
+
+{% endblock content %}

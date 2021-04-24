@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lobster&family=Roboto:ital,wght@0,300;0,400;1,300&display=swap"
+        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,300;0,400;1,300&display=swap"
+        rel="stylesheet">
+
+    <style>
+        .wrap {
+            width: 100%;
+        }
+
+        .title {
+            font-family: 'Lobster', cursive;
+            color: blue;
+            font-size: 25px;
+        }
+
+        .font{
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .heading {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .container {
+            margin-left: 90px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .left-panel {
+            float: left;
+            width: 50%;
+            height: 90vh;
+            margin: 0px;
+        }
+
+        .right-panel {
+            float: right;
+            background-image: linear-gradient(to top right, rgb(57, 212, 240), rgb(86, 80, 168), rgb(233, 69, 225), rgb(255, 0, 0));
+            height: 100vh;
+            width: 50%;
+            top: 0px;
+            margin-left: 50%;
+            position: fixed;
+        }
+
+        input[type='text'],
+        input[type='password'] {
+            width: 350px;
+            height: 35px;
+            border-width: 0px;
+            border-radius: 2px;
+            background-color: rgba(0, 0, 0, .1);
+        }
+
+        input[type="text"]::placeholder,
+        input[type="password"]::placeholder {
+            padding-left: 5px;
+        }
+
+        input[type='submit'] {
+            width: 55%;
+            height: 40px;
+            margin-top: 20px;
+            border-radius: 5px;
+            border-width: 0px;
+            background-color: #128EFE;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrap">
+        <div class="left-panel">
+            <div class="container">
+                <p style="margin-top: 20px;" class="title">Together</p>
+
+                <h1 style="margin-top: 10px;" class="heading">Register for an account</h1>
+
+                <form class='form-login' method="POST">{% csrf_token %}
+                    <p style="margin-top: 10px;" class="font">Email address</p>
+                    <input type="text" name="email" id="inputEmail" class="form-control" placeholder='Enter your email'
+                        required autofocus>
+
+                    <p class="font">Username</p>
+                    <input type="text" name="username" id="inputUsername" class="form-control"
+                        placeholder="Enter a username" required>
+
+                    <p class="font">Password</p>
+                    <input type="password" name="password1" id="inputPassword" class="form-control"
+                        placeholder='Enter your password' required>
+
+                    <p class="font">Confirm Password</p>
+                    <input type="password" name="password2" id="inputPassword" class="form-control"
+                        placeholder='Enter your password' required><br>
+
+                    {% for field in registration_form %}
+                    <p>
+                        {% for error in field.errors %}
+                    <p style="color: red">{{ error }}</p>
+                    {% endfor %}
+                    </p>
+                    {% endfor %}
+                    {% if registration_form.non_field_errors %}
+                    <div style="color: red">
+                        <p>{{registration_form.non_field_errors}}</p>
+                    </div>
+                    {% endif %}
+                    <input type="checkbox" required><span class="font">By checking this you agrees to the terms and conditons</span>
+                    <input type="submit" placeholder="Login">
+                </form>
+                <p class="font">Already have an account?<a style="text-decoration: none;" href="{% url 'login' %}">Login</a></p>
+            </div>
+        </div>
+
+        <div class="right-panel">
+
+        </div>
+    </div>
+</body>
+
+</html>

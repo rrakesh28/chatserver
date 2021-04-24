@@ -1,0 +1,196 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <title>Document</title>
+
+    <style>
+        .left-panel {
+            width: 20%;
+            height: 100vh;
+            margin: -8px;
+            background-color: #f1f0f0;
+            box-shadow: inset 1px 0px 10px rgba(0,0,0,.2);
+            position: fixed;
+        }
+
+        .font{
+            font-family: 'Roboto', sans-serif;
+        }
+
+        a{
+            text-decoration: none;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 2;
+        }
+
+        .search{
+            width: 15%;
+            height: 29px;
+            margin-left: 2.1%;
+            margin-top: 10px;
+            border-radius: 10px;
+            border: 1px solid #ececec;
+            box-shadow: -10px -10px 15px rgba(225,225,225,.5),
+                        10px 10px 15px rgba(70,70,70,.12);
+        }
+
+        input:focus{
+            outline-color: #ececec;
+        }
+
+        input[type='text']::placeholder{
+            padding: 5px;
+        }
+
+        .profile_image{
+            width: 49px;
+            border-radius: 25%;
+            margin-top: 8%;
+            margin-left: 1%;
+            box-shadow: 3px 3px 10px rgba(0,0,0,.7),
+                        10px 10px 15px rgba(70,70,70,.12);
+        }
+
+        .username{
+            margin-top: 9%;
+            margin-left: 5%;
+            color: white;
+            font-size: 20px;
+        }
+
+        a p{
+            color: rgba(0,0,0,.5);
+            margin-top: 8px;
+            margin-left: 10px;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        a button{
+            width: 35px;
+            height: 35px;
+            margin-top: 10px;
+            background-color: white;
+            border: 0px;
+            border-radius: 7px;
+            box-shadow: 10px 0px 9px rgba(0,0,0,.2);
+        }
+
+        a button:hover{
+            box-shadow: inset 10px 0px 9px rgba(0,0,0,.2);
+        }
+
+        button span{
+            margin: -2px;
+            margin-left: -2px;
+        }
+
+        .main-panel {
+            width: 55.5%;
+            position: relative;
+            margin-left: 19.8%;
+            margin-top: -10px;
+            height: auto;
+            background-color: rgba(255,255,255,.1);
+        }
+
+        .right-panel {
+            width: 25%;
+            height: 100vh;
+            border: 1px solid black;
+            position: fixed;
+            right: 0px;
+        }
+    </style>
+
+    <script>
+        function executeQuery(){
+            var query = document.getElementById('search').value;
+           window.location.replace("{% url 'search' %}?q=" + query)
+           return false
+        }
+    </script>
+</head>
+
+<body>
+
+    <div style="display: flex; flex-direction: row;">
+        <div class="left-panel">
+            <div class="profile">
+                <form onsubmit="return executeQuery();">
+                    <input class="overlay search" type="text" placeholder="Search" id="search">
+                </form>
+                <img style="width: 100%; height: 40%; filter:brightness(180%)" src="{% static 'images/bg.jpeg' %}" alt="">
+
+                <div class="profile">
+                    <a href="{% url 'account:view' user_id=request.user.id %}">
+                        <img class="overlay profile_image" src="{{request.user.profile_image.url}}" alt="">
+                        <p class="overlay username font" style="width: 190px; height: 40px;">{{request.user.username}}</p>
+                    </a>
+                </div>
+
+                <div class="menu" style="margin: 20px; margin-left: 19%; display:flex; flex-direction:column;">
+                    <a href="/">
+                        <div class="home" style="display: flex; flex-direction: row;">
+                            <a href="/"><button><span class="material-icons">home</span></i></button></a>
+                            <a href="/"><p>Home</p></a>
+                        </div>
+                    </a>  
+                    
+                    <a href="{% url 'account:view' user_id=request.user.id %}">
+                        <div class="home" style="display: flex; flex-direction: row;">
+                            <a href="{% url 'account:view' user_id=request.user.id %}"><button><span class="material-icons" style="color: rgb(31, 143, 248);">person</span></i></button></a>
+                            <a href="{% url 'account:view' user_id=request.user.id %}"><p>Profile</p></a>
+                        </div>
+                    </a>  
+
+                    <a href="/">
+                        <div class="home" style="display: flex; flex-direction: row;">
+                            <a href="/"><button><span class="material-icons" style="color: blue;">chat</span></i></button></a>
+                            <a href="/"><p>chat</p></a>
+                        </div>
+                    </a>  
+
+                    <a href="/">
+                        <div class="home" style="display: flex; flex-direction: row;">
+                            <a href="/"><button><span class="material-icons" style="color: green;">people</span></i></button></a>
+                            <a href="/"><p>Friends</p></a>
+                        </div>
+                    </a>  
+
+                    <a href="{% url 'logout' %}">
+                        <div class="home" style="display: flex; flex-direction: row;">
+                            <a href="{% url 'logout' %}"><button><span class="material-icons" style="color: red;">logout</span></i></button></a>
+                            <a href="{% url 'logout' %}"><p>Logout</p></a>
+                        </div>
+                    </a>  
+                </div>
+            </div>
+        </div>
+
+        <div class="main-panel">
+            {% block content %}
+
+            {% endblock content %}
+        </div>
+
+        <div class="right-panel">
+
+        </div>
+    </div>
+</body>
+
+</html>
