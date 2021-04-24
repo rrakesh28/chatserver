@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-svmsqn&9_s4u!na_hr7$cdm3^8il9y_gnfxd*xl-(gi-&h5b_#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['aminoz-together']
+ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = "account.Account"
 
@@ -142,7 +142,7 @@ TEMP = os.path.join(BASE_DIR,'/temp')
 
 STATIC_URL = '/static/'
 
-BASE_URL = '127.0.0.1'
+BASE_URL = 'https://aminoz-together'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
