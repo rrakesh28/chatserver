@@ -3,6 +3,8 @@ dj-database-url==0.5.0
 Django==3.2
 django-heroku==0.3.1
 gunicorn==20.1.0
+numpy==1.20.2
+opencv-python==4.5.1.48
 Pillow==8.2.0
 psycopg2==2.8.6
 python-decouple==3.4
