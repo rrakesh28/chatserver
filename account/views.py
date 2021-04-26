@@ -11,7 +11,7 @@ import cv2
 import json
 import base64
 import requests
-from django.core import fiLes
+from django.core import files
 
 
 TEMP_PROFILE_IMAGE_NAME = 'temp_profile_image.png'
@@ -180,40 +180,47 @@ def edit_account_view(request,*args,**kwargs):
     return render(request,'account/edit_account.html',context)
 
 def save_temp_profile_image_form_base64String(imageString, user):
-    INCRRECT_PADDING_EXCEPTION = "incorrect padding"
+    INCORRECT_PADDING_EXCEPTION = "incorrect padding"
 
     try:
         if not os.path.exists(settings.TEMP):
             os.mkdir(settings.TEMP)
-        if not os.path.exists(f"{settings.TEMP}/{user.pk}"):
-            os.mkdir(f"{settings.TEMP}/{user.pk}")
-        url = os.paht.join(f"{settings.TEMP}/{user.pk}", TEMP_PROFILE_IMAGE_NAME)
+
+        if not os.path.exists(settings.TEMP + "/" + str(user.pk)):
+            os.mkdir(settings.TEMP + "/" + str(user.pk))
+
+        url = os.path.join(settings.TEMP + "/" + str(user.pk), TEMP_PROFILE_IMAGE_NAME)
+        print("url from save temp:"+url)
+        
         storage = FileSystemStorage(location=url)     
         image = base64.b64decode(imageString)
-        with storage.open('','wb+') as destinaiton:
-            destinaiton.write(image)
-            destinaiton.close() 
+        with storage.open('','wb+') as destination:
+            destination.write(image)
+            destination.close() 
         return url
-    except Exception as e:
-        if str(e) == INCRRECT_PADDING_EXCEPTION:
-            imageSring += "=" * ((4 - len(imageSring) % 4) % 4)
-            return save_temp_profile_image_form_base64String(imageSring, user)
-    return None
 
+    except Exception as e:
+        print("exception: "+str(e))
+        if str(e) == INCORRECT_PADDING_EXCEPTION:
+            imageString += "=" * ((4 - len(imageString) % 4) % 4)
+            return save_temp_profile_image_form_base64String(imageString, user)
 
 def crop_image(request,*args,**kwargs):
     payload = {}
     user = request.user
     if request.POST and user.is_authenticated:
         try:
-            imageSring = request.POST.get('image')
-            url = save_temp_profile_image_form_base64String(imageSting, user)
+
+            imageString = request.POST.get('image')
+            url = save_temp_profile_image_form_base64String(imageString, user)
+            print("url :"  + str(url))
             img = cv2.imread(url)
 
             cropX = int(float(str(request.POST.get('cropX'))))
             cropY = int(float(str(request.POST.get('cropY'))))
-            cropWidht = int(float(str(request.POST.get('cropWidht'))))
+            cropWidth = int(float(str(request.POST.get('cropWidth'))))
             cropHeight = int(float(str(request.POST.get('cropHeight'))))
+           
 
             if cropX < 0:
                 cropX = 0
@@ -221,9 +228,9 @@ def crop_image(request,*args,**kwargs):
             if cropY < 0:
                 cropY = 0
 
-            crop_img = img[cropY: cropY + cropHeight, cropX: cropX+cropWidht]
+            crop_img = img[cropY: cropY + cropHeight, cropX: cropX+cropWidth]
 
-            cv2.imwrite9url, crop_img
+            cv2.imwrite(url, crop_img)
 
             user.profile_image.delete()
 
@@ -236,7 +243,8 @@ def crop_image(request,*args,**kwargs):
             os.remove(url)
 
         except Exception as e:
+            print("exception:" + str(e))
             payload['result'] = 'error'
             payload['exception'] = str(e)
 
-        return HttpResponse(json.dump(payload),context_type='application/json')
+    return HttpResponse(json.dumps(payload), content_type="application/json")
