@@ -4,7 +4,17 @@ from django.conf import settings
 from account.models import Account
 from django.http import HttpResponse
 from account.forms import RegistrationForm,AccountAuthenticationForm,AccountUpdateForm
+from django.core.files.storage import default_storage
+from django.core.files.storage import FileSystemStorage
+import os
+import cv2
+import json
+import base64
+import requests
+from django.core import fiLes
 
+
+TEMP_PROFILE_IMAGE_NAME = 'temp_profile_image.png'
 # Create your views here.
 def login_view(request,*args,**kwargs):
     context = {}
@@ -104,6 +114,7 @@ def account_view(request,*args,**kwargs):
         return render(request,'account/account.html', context)
 
 
+
 def account_search_view(request,*args,**kwargs):
     context = {}
 
@@ -167,3 +178,65 @@ def edit_account_view(request,*args,**kwargs):
     
     context['DATA_UPLOAD_MAX_MEMROY_SIZE'] = settings.DATA_UPLOAD_MAX_MEMROY_SIZE
     return render(request,'account/edit_account.html',context)
+
+def save_temp_profile_image_form_base64String(imageString, user):
+    INCRRECT_PADDING_EXCEPTION = "incorrect padding"
+
+    try:
+        if not os.path.exists(settings.TEMP):
+            os.mkdir(settings.TEMP)
+        if not os.path.exists(f"{settings.TEMP}/{user.pk}"):
+            os.mkdir(f"{settings.TEMP}/{user.pk}")
+        url = os.paht.join(f"{settings.TEMP}/{user.pk}", TEMP_PROFILE_IMAGE_NAME)
+        storage = FileSystemStorage(location=url)     
+        image = base64.b64decode(imageString)
+        with storage.open('','wb+') as destinaiton:
+            destinaiton.write(image)
+            destinaiton.close() 
+        return url
+    except Exception as e:
+        if str(e) == INCRRECT_PADDING_EXCEPTION:
+            imageSring += "=" * ((4 - len(imageSring) % 4) % 4)
+            return save_temp_profile_image_form_base64String(imageSring, user)
+    return None
+
+
+def crop_image(request,*args,**kwargs):
+    payload = {}
+    user = request.user
+    if request.POST and user.is_authenticated:
+        try:
+            imageSring = request.POST.get('image')
+            url = save_temp_profile_image_form_base64String(imageSting, user)
+            img = cv2.imread(url)
+
+            cropX = int(float(str(request.POST.get('cropX'))))
+            cropY = int(float(str(request.POST.get('cropY'))))
+            cropWidht = int(float(str(request.POST.get('cropWidht'))))
+            cropHeight = int(float(str(request.POST.get('cropHeight'))))
+
+            if cropX < 0:
+                cropX = 0
+
+            if cropY < 0:
+                cropY = 0
+
+            crop_img = img[cropY: cropY + cropHeight, cropX: cropX+cropWidht]
+
+            cv2.imwrite9url, crop_img
+
+            user.profile_image.delete()
+
+            user.profile_image.save('profile_image.png',files.File(open(url, 'rb')))
+            user.save()
+
+            payload['result'] : 'sucess'
+            payload['cropped_profile_image'] = user.profile_image.url
+
+            os.remove(url)
+
+        except Exception as e:
+            payload['result'] = 'error'
+            payload['exception'] = str(e)
+
+        return HttpResponse(json.dump(payload),context_type='application/json')

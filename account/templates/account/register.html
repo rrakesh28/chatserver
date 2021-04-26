@@ -78,6 +78,55 @@
             border-width: 0px;
             background-color: #128EFE;
         }
+
+        @media (max-width : 360px){
+            .right-panel{
+                display: none;
+            }
+
+            .left-panel{
+                width: 100%;
+                height: 80vh;
+            }
+
+            .container{
+                margin-left: 0px;
+                height: 80vh;
+            }
+
+            .title{
+                margin-top: 10px;
+            }
+
+            .heading{
+                font-size: 20px;
+                margin-top: 10px;
+            }
+
+            .email{
+                margin-top: 20px;
+                font-size: 15px;
+            }
+
+            .password{
+                font-size: 15px;
+            }
+
+            input[type='text'],
+            input[type='password'] {
+                width: 200px;
+                height: 35px;
+            }
+
+            input[type="submit"]{
+                width: 200px;
+                height: 35px;
+            }
+
+            .form-login{
+                margin-left: calc(50vw - 120px);
+            }
+        }
     </style>
 </head>
 
@@ -119,9 +168,10 @@
                     </div>
                     {% endif %}
                     <input type="checkbox" required><span class="font">By checking this you agrees to the terms and conditons</span>
-                    <input type="submit" placeholder="Login">
+                    <input type="submit" placeholder="Login"><br>
+                    <p class="font">Already have an account?<a style="text-decoration: none;" href="{% url 'login' %}">Login</a></p>
                 </form>
-                <p class="font">Already have an account?<a style="text-decoration: none;" href="{% url 'login' %}">Login</a></p>
+                
             </div>
         </div>
 
