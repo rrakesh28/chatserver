@@ -2,4 +2,43 @@
 
 {% block content%}
 
+<style type="text/css">
+
+	.mobile-view-header{
+		display: flex;
+		flex-direction: row;
+	}
+
+	.title{
+		font-family: 'Dancing Script', cursive;
+		font-size: 25px;
+		margin-left: 20px;
+	}
+
+	.notification-chat-container{
+		display: flex;
+		flex-direction: row;
+		position: absolute;
+		margin-top: 25px;
+		right: 20px;
+	}
+
+	.general-notification{
+		margin-right: 20px;
+	}
+
+	.general-notification span,.chat-notification span{
+		font-size: 25px;
+	}
+</style>
+
+<div class="mobile-view-header">
+	<div class="title"><p>Together</p></div>
+
+        <div class="notification-chat-container">
+            <div class="general-notification"><span class="material-icons-outlined">notifications</span></div>
+            <div class="chat-notification"><span class="material-icons-outlined">chat</span></div>
+        </div>
+</div>
+
 {% endblock content%}

@@ -22,21 +22,24 @@ from personal.views import (
     home_view,
 )
 from account.views import (
-    login_view,
-    register_view,
-    logout_view,
     account_view,
     account_search_view,
+    logout_view,
+    login_view,
+    register_view,
+    search_page_view,
 )
 
 urlpatterns = [
     path('',home_view,name='home'),
-    path('account/',include('account.urls',namespace='account')),
-    path('login/',login_view,name='login'),
-    path('register/',register_view,name='register'),
-    path('logout/',logout_view,name='logout'),
     path('admin/', admin.site.urls),
+    path('account/',include('account.urls',namespace='account')),
+    path('friend/',include('friend.urls',namespace='friend')),
+    path('login/',login_view,name='login'),
+    path('logout/',logout_view,name='logout'),
+    path('register/',register_view,name='register'),
     path('search/',account_search_view,name='search'),
+    path('search_page',search_page_view,name='search_page'),
 
      # Password reset links (ref: https://github.com/django/django/blob/master/django/contrib/auth/views.py)
     path('password_change/done/', auth_views.PasswordChangeDoneView.as_view(template_name='password_reset/password_change_done.html'), 
@@ -55,6 +58,5 @@ urlpatterns = [
      name='password_reset_complete'),
 ]
 
-if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

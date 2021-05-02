@@ -79,7 +79,7 @@
             background-color: #128EFE;
         }
 
-        @media (max-width : 360px){
+        @media (max-width : 420px){
             .right-panel{
                 display: none;
             }
@@ -167,7 +167,7 @@
                         <p>{{registration_form.non_field_errors}}</p>
                     </div>
                     {% endif %}
-                    <input type="checkbox" required><span class="font">By checking this you agrees to the terms and conditons</span>
+                    <input type="checkbox" required><span class="font">By checking this you agrees to the terms and conditons</span><br>
                     <input type="submit" placeholder="Login"><br>
                     <p class="font">Already have an account?<a style="text-decoration: none;" href="{% url 'login' %}">Login</a></p>
                 </form>

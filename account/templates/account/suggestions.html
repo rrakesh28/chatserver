@@ -1,0 +1,54 @@
+{% extends 'account/search_page.html' %}
+
+{% block results %}
+
+{% if accounts %}
+
+<style type="text/css">
+	.profile-view{
+            display: flex;
+            flex-direction: row;
+            position: relative;
+            top: 20px;
+            width: 80vw;
+
+        }
+
+        .profile_image{
+            width: 65px;
+            height: 65px;
+            border-radius: 10px;
+        }
+
+        .username-view{
+            font-family: 'Roboto', sans-sareif;
+        }
+
+        .send-message{
+            font-family: 'Roboto', sans-sareif;
+            background-color: #1E90FF;
+            height: 30px;
+            width: 70px;
+            border-radius: 10px;
+            border: 0px;
+            margin-top: 5px;
+        }
+
+        a{
+            text-decoration: none;
+            color: black;
+        }
+</style>
+    <div style="display: flex; flex-direction: column;">
+        {% for account in accounts%}
+        <div class="profile-view">
+            <a href="{% url 'account:view' user_id=account.0.id%}"><img src="{{account.0.profile_image.url}}" class="profile_image"></a>
+
+            <div style="display: flex; flex-direction: column; margin-left: 10px;">
+                <a href="{% url 'account:view' user_id=account.0.id %}"><span class="username-view">{{account.0.username}}</span></a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endif %}
+{% endblock results %}

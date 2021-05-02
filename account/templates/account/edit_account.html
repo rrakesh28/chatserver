@@ -2,108 +2,97 @@
 {% load static %}
 
 {% block content %}
-
 <style>
-    .profile-panel{
-        background-color: white;
-        width: 90%;
-        margin-left: 4.5%;
-        height: 380px;
-        box-shadow: 5px -5px 9px rgba(0,0,0,.2),
-                    -5px 5px 9px rgba(0,0,0,.2);
-    }
+    @media (max-width: 420px){
+        .mobile-view{
+            display: block;
+            overflow-x: hidden;
+        }
 
-    .profile-pic{
-        margin-left: 80px;
-        width: 80px;
-        margin-top: 270px;
-        border-radius: 50%;
-        position: absolute;
-    }
+        .profile-panel{
+            width: 100%;
+        }
 
-    .input{
-        background-color: rgba(0, 0, 0, .1);
-        width: 300px;
-        height: 29px;
-        border-radius: 10px;
-        border: 1px solid black;
-        box-shadow: -10px -10px 15px rgba(225,225,225,.5),
-                    10px 10px 15px rgba(70,70,70,.12);
-    }
+        .background-image{
+            width: 100%;
+        }
 
-    .button-style{
-        margin-top: 20px;
-        width: 80px;
-        height: 30px;
-        border-radius: 10px;
-        background-color: #128EFE;
-        border: 0px;
-        color: white;
-    }
+        .image-container{
+            width: 140px;
+            height: 140px;
+            background-color: white;
+            border-radius: 50%;
+            box-shadow: 7px 7px 9px rgba(225,225,225,.5),
+                        -7px -7px 9px rgba(225,225,225,.5);
+            position: absolute;
+            left: 50%;
+            transform: translate(-50%,-50%);
+            padding: 5px;
+            z-index: 2;
+        }
 
-    .form-login{
-        margin-left: 10%;
-    }
+        .profile-pic{
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+        }
 
-    .change-password{
-        text-decoration: none;
-        font-family: 'Roboto', sans-serif;
+        .settings{
+            position: absolute;
+            color: white;
+            top: 30px;
+            left: 10px;
+        }
     }
-
 </style>
-<div>
-    <div class="profile-panel">
-        <div class="profile-container" id="profile_container">
-            <img id="profile_image_display" style="width: 100%; height: 300px;" src="{% static 'images/bg.jpeg' %}" alt="">
 
-            <div style="margin-top: 20px; margin-left:40px; z-index: 2; cursor: pointer;" id="id_image_crop_confirm">
-                <span id="id_cancel" class="material-icons" style="cursor: pointer; display: none">cancel</span>
-                  <span id="id_confirm" style="margin-left:10px; top: 0px cursor: pointer;" class="material-icons">check</span>
-            </div>
+<div class="mobile-view">
 
-            <div class="image-container" id="id_image_container">
-                <img class="overlay profile-pic" id= "id_profile_image_display" src="{{form.initial.profile_image}}" alt="">
-                <p class="font" style="margin-left: 140px;">{{form.initial.username}}</p>
-                <div class="middle" id="id_middle_container">
-                    <div class="text font" id="id_text" style="margin-left: 40px; cursor: pointer;">Edit</div>
-                </div>
-            </div>
+	<div class="profile-panel" id="profile_container">
 
-            
+		<img class="background-image" src="{% static 'images/bg.jpeg' %}" alt="">
+
+		<div class="image-container" id="id_image_container">
+			<img src="{{form.initial.profile_image}}" alt="" class="profile-pic" id="id_profile_image_display">
+		</div>
+
+        <div id="id_image_crop_confirm">
+            <span id="id_confirm" class="material-icons">check</span>
         </div>
+	</div>
+
+    <div>
+        <form class='form-login' method="POST">{% csrf_token %}
+            <input style="display: none;" type="file" name="profile_image" id="id_profile_image" onchange="readURL(this)">
+    
+            <p style="margin-top: 40px;font-family: 'Roboto', sans-serif; font-style:bold;">Email address</p>
+            <input class="input font" type="text" name="email" id="inputEmail" value={{form.initial.email}}>
+    
+            <p style="margin-top: 40px;font-family: 'Roboto', sans-serif; font-style:bold;">Username</p>
+            <input class="input font" type="text" name="username" id="inputUsername" value="{{form.initial.username}}"><br>
+    
+            <input style="margin-top: 20px;" type="checkbox"><span class="font" name="hide_email" id="id_input_hide_email" {% if form.initial.hide_email %} checked {% endif %}>Hide Email</span><br>
+    
+            {% for field in login_form %}
+            <p>
+                {% for error in field.errors %}
+            <p style="color: red">{{ error }}</p>
+            {% endfor %}
+            </p>
+            {% endfor %}
+            {% if registration_form.non_field_errors %}
+            <div style="color: red">
+                <p>{{registration_form.non_field_errors}}</p>
+            </div>
+            {% endif %}
+    
+            <a class="change-password" href="#">Change Password</a><br>
+            <a><button class="button-style" type="submit">Update</button></a>
+        </form>
     </div>
-
-    <form class='form-login' method="POST"  enctype="multipart/form-data">{% csrf_token %}
-        <input style="display: none;" type="file" name="profile_image" id="id_profile_image" onchange="readURL(this)">
-
-        <p style="margin-top: 40px;font-family: 'Roboto', sans-serif; font-style:bold;">Email address</p>
-        <input class="input font" type="text" name="email" id="inputEmail" value={{form.initial.email}}>
-
-        <p style="margin-top: 40px;font-family: 'Roboto', sans-serif; font-style:bold;">Username</p>
-        <input class="input font" type="text" name="username" id="inputUsername" value="{{form.initial.username}}"><br>
-
-        <input style="margin-top: 20px;" type="checkbox"><span class="font" name="hide_email" id="id_input_hide_email" {% if form.initial.hide_email %} checked {% endif %}>Hide Email</span><br>
-
-        {% for field in login_form %}
-        <p>
-            {% for error in field.errors %}
-        <p style="color: red">{{ error }}</p>
-        {% endfor %}
-        </p>
-        {% endfor %}
-        {% if registration_form.non_field_errors %}
-        <div style="color: red">
-            <p>{{registration_form.non_field_errors}}</p>
-        </div>
-        {% endif %}
-
-        <a class="change-password" href="#">Change Password</a><br>
-        <a><button class="button-style" type="submit">Update</button></a>
-    </form>
 </div>
 
-<script type="text/javascript">
-    
+<script>
     var cropper;
     var imageFile;
     var base64ImageString;
@@ -182,65 +171,33 @@
                 dataType: "json",
                 url: "{% url 'account:crop_image' user_id=form.initial.id %}",
                 data: requestData,
-                timeout: 10000,
+                timeout: 20000,
                 success: function(data) {
                     if(data.result == "success"){
-                        document.getElementById("id_cancel").click()
+                       window.location.reload()
                     }
                     else if(data.result == "error"){
                         alert(data.exception)
-                        document.getElementById("id_cancel").click()
+                        window.location.reload()
                     }
                 },
                 error: function(data) {
                     console.error("ERROR...", data)
+                    alert(str(data))
                 },
                 complete: function(data){
-    
+                    window.location.reload()
                 }
             });
         }
         else{
             alert("Upload an image smaller than 10MB!")
-            document.getElementById("id_cancel").click()
+            location.reload()
         }
     }
 
     function enableImageOverlay(){
-        var text = document.getElementById("id_text")
-		text.style.backgroundColor = "#0066ff"
-		text.style.color = "white"
-        text.style.display = "inline"
-        text.style.alignItems = "center"
-		text.style.cursor = "pointer"
-
-        var profileImage = document.getElementById("id_profile_image")
-		profileImage.style.opacity = "0.3"
-		profileImage.style.width = "100%"
-		profileImage.style.height = "auto"
-		profileImage.style.transition = ".5s ease"
-		profileImage.style.backfaceVisibility  = "hidden"
-		profileImage.style.cursor = "pointer"
-
-        var middleContainer = document.getElementById("id_middle_container")
-		middleContainer.style.transition = ".5s ease"
-		middleContainer.style.opacity = "1"
-		middleContainer.style.position = "absolute"
-		middleContainer.style.top = "43%"
-		middleContainer.style.left = "9%"
-        middleContainer.style.zIndex = "4"
-
         var imageContainer = document.getElementById("id_image_container")
-
-		imageContainer.addEventListener("mouseover", function( event ) { 
-			profileImage.style.opacity = "0.3"
-			middleContainer.style.opacity = "1"
-		})
-
-        imageContainer.addEventListener("mouseout", function( event ) { 
-			profileImage.style.opacity = "1"
-			middleContainer.style.opacity = "0"
-		})
 
         imageContainer.addEventListener("click", function(event){
 			document.getElementById('id_profile_image').click();
@@ -251,25 +208,7 @@
     }
 
     function disableImageOverlay(){
-        var profileImage = document.getElementById("id_profile_image_display")
-		var middleContainer = document.getElementById("id_middle_container")
 		var imageContainer = document.getElementById("id_image_container")
-		var text = document.getElementById("id_text")
-
-        imageContainer.removeEventListener("mouseover", function( event ) { 
-			profileImage.style.opacity = "0.3"
-			middleContainer.style.opacity = "1"
-		})
-
-		imageContainer.removeEventListener("mouseout", function( event ) { 
-			profileImage.style.opacity = "1"
-			middleContainer.style.opacity = "0"
-		})
-
-		profileImage.style.opacity = "1"
-		middleContainer.style.opacity = "0"
-		text.style.cursor = "default"
-		text.style.opacity = "0"
 
 		document.getElementById('id_image_container').removeEventListener("click", function(event){
 			event.preventDefault();
@@ -286,7 +225,7 @@
         var confirm = document.getElementById('id_confirm')
         confirm.addEventListener("click", function(event){
             cropImage(imageFile, cropX , cropY, cropWidth, cropHeight)
-            location.reload()
+            
         });
     }
 

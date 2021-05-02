@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     # #myapps
     'account',
     'personal',
-    'chatserver',
+    'friend',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -138,7 +138,7 @@ MEDIA_URL = '/media/'
 STATIC_ROOT = os.path.join(BASE_DIR,'static_cdn')
 MEDIA_ROOT = os.path.join(BASE_DIR,'media_cdn')
 
-TEMP = os.path.join(BASE_DIR,'/temp')
+TEMP = os.path.join(BASE_DIR,'./temp')
 
 STATIC_URL = '/static/'
 
@@ -152,5 +152,5 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 STATICFIELS_STORAGE = 'whitenoise.storage.CompressedManifestStaicFilesStorage'
 django_heroku.settings(locals())
 
-DATA_UPLOAD_MAX_MEMROY_SIZE = 10485760
+DATA_UPLOAD_MAX_MEMROY_SIZE = 1
 
