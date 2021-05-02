@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-svmsqn&9_s4u!na_hr7$cdm3^8il9y_gnfxd*xl-(gi-&h5b_#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*localhost','aminoz-together']
 
 AUTH_USER_MODEL = "account.Account"
 
@@ -57,7 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+    #'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'chatserver.urls'
@@ -149,7 +149,7 @@ BASE_URL = 'https://aminoz-together'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-STATICFIELS_STORAGE = 'whitenoise.storage.CompressedManifestStaicFilesStorage'
+#STATICFIELS_STORAGE = 'whitenoise.storage.CompressedManifestStaicFilesStorage'
 django_heroku.settings(locals())
 
 DATA_UPLOAD_MAX_MEMROY_SIZE = 1
