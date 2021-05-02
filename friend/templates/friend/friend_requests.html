@@ -1,0 +1,63 @@
+{% extends 'personal/home.html' %}
+
+{% block content %}
+
+<style type="text/css">
+	
+	.container p{
+		margin: 30px;
+		display: inline;
+	}
+
+	.profile_image{
+
+	}
+
+	.request{
+		width: 80vw;
+		box-shadow: 10px 10px 9px rgba(225,225,225,.3);
+		display: flex;
+		flex-direction: row;
+	}
+
+	.profile-panel{
+		display: flex;
+		flex-direction: row;
+	}
+
+	.profile_image{
+		width: 70px;
+		height: 70px;
+		border-radius: 10px;
+	}
+
+	.profile-view{
+		margin-top: 60px;
+		position: absolute;
+		margin-left: 5vw;
+	}
+</style>
+
+<div class="container">
+
+	<p>Requests</p>
+	<div class="profile-view">
+		<div class="request"> 
+			<a href="">
+				<div class="profile-panel">
+					<a href="#"><img src="{{request.user.profile_image.url}}" class="profile_image"></a>
+
+					<p style="font-family: 'Roboto', sans-serif;">{{request.user.username}}</p>
+				</div>
+			</a>
+
+			<div style="display: flex; margin-top: 20px;">
+				<button style="border: 0px; width: 40px; height: 40px; background-color: red; border-radius: 50%; margin-right: 5px;"><span style="color: white;" class="material-icons-outlined">close</span></button>
+				<button style="width: 40px; height: 40px; border: 0px; background-color: #0095F6; border-radius: 50%;"><span style="color: white;" class="material-icons-outlined">done</span></button>
+			</div>
+		</div>
+
+
+	</div>
+</div>
+{% endblock content %}

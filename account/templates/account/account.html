@@ -51,7 +51,7 @@
 		.details{
 			 font-family: 'Roboto', sans-serif;
 			 position: absolute;
-			 left: 45%;
+			 left: 40%;
 			 margin-top: 75px;
 		}
 
@@ -112,7 +112,7 @@
 		{% endif %}
 
 		{% if friend_requests %}
-			<a href=""><button><span class="material-icons-outlined">person_add</span></button></a>
+			<a href="{% url 'friend:friend_request' user_id=id %}"><button><span class="material-icons-outlined">person_add</span></button></a>
 		{% endif %}
 
 		{% if is_friend == False and is_self == False %}
@@ -141,7 +141,7 @@
 		<p style="font-family: 'Roboto', sans-serif;">{{username}} sent a friend request </p>
 
 		<div style="display: flex;justify-content: center;">
-			<button style="background-color: #0095F6"><span style="columns: white;" class="material-icons-outlined">done</span></button>
+			<button style="background-color: #0095F6"><span style="color: white;" class="material-icons-outlined">done</span></button>
 			<button style="background-color: red;"><span style="color: white;" class="material-icons-outlined">close</span></button>
 		</div>
 	</div>
