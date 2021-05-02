@@ -57,7 +57,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #'whitenoise.middleware.WhiteNoiseMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'chatserver.urls'
@@ -149,7 +149,7 @@ BASE_URL = 'https://aminoz-together'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-#STATICFIELS_STORAGE = 'whitenoise.storage.CompressedManifestStaicFilesStorage'
+STATICFIELS_STORAGE = 'whitenoise.storage.CompressedManifestStaicFilesStorage'
 django_heroku.settings(locals())
 
 DATA_UPLOAD_MAX_MEMROY_SIZE = 1

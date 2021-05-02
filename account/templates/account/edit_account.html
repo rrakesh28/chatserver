@@ -43,6 +43,40 @@
             top: 30px;
             left: 10px;
         }
+
+        .form-login{
+            margin-top: 100px;
+            margin-left: 20px;
+        }
+
+        .check{
+            position: absolute;
+            border: 0px;
+            border-radius: 50%;
+            left: 50%;
+            top: 300px;
+            width: 40px;
+            height: 40px;
+            background-color: #0095F6;
+        }
+
+        input[type='text']{
+            border: 0px;
+            background-color: rgba(0,0,0,.2);
+            height: 20px;
+            padding: 5px;
+            border-radius: 10px;
+        }
+
+        .button-style{
+            margin-top: 5px;
+            border: 0px;
+            color: white;
+            background-color: #0095F6;
+            width: 70px;
+            height: 30px;
+            border-radius: 10px;
+        }
     }
 </style>
 
@@ -57,7 +91,7 @@
 		</div>
 
         <div id="id_image_crop_confirm">
-            <span id="id_confirm" class="material-icons">check</span>
+            <button class="check"><span id="id_confirm" class="material-icons" style="color: white;">check</span></button>
         </div>
 	</div>
 
@@ -71,7 +105,7 @@
             <p style="margin-top: 40px;font-family: 'Roboto', sans-serif; font-style:bold;">Username</p>
             <input class="input font" type="text" name="username" id="inputUsername" value="{{form.initial.username}}"><br>
     
-            <input style="margin-top: 20px;" type="checkbox"><span class="font" name="hide_email" id="id_input_hide_email" {% if form.initial.hide_email %} checked {% endif %}>Hide Email</span><br>
+            <input style="margin-top: 20px;" type="checkbox"><span style="font-family: 'Roboto', sans-serif;" class="font" name="hide_email" id="id_input_hide_email" {% if form.initial.hide_email %} checked {% endif %}>Hide Email</span><br>
     
             {% for field in login_form %}
             <p>
@@ -86,7 +120,7 @@
             </div>
             {% endif %}
     
-            <a class="change-password" href="#">Change Password</a><br>
+            <a class="change-password" href="#" style="font-family: 'Roboto', sans-serif; text-decoration: none;">Change Password</a><br>
             <a><button class="button-style" type="submit">Update</button></a>
         </form>
     </div>
