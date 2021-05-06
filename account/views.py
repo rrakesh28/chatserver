@@ -118,7 +118,7 @@ def account_view(request,*args,**kwargs):
         if user.is_authenticated and user != account:
             is_self = False
             if friends.filter(pk=user.id):
-                is_self = True
+                is_friend = True
             else:
                 is_friend = False
 

@@ -30,6 +30,11 @@ from account.views import (
     search_page_view,
 )
 
+from post.views import(
+    post_page_view,
+    add_post,
+)
+
 urlpatterns = [
     path('',home_view,name='home'),
     path('admin/', admin.site.urls),
@@ -37,6 +42,8 @@ urlpatterns = [
     path('friend/',include('friend.urls',namespace='friend')),
     path('login/',login_view,name='login'),
     path('logout/',logout_view,name='logout'),
+    path('post/',post_page_view,name='post_page'),
+    path('add_post/',add_post,name='add_post'),
     path('register/',register_view,name='register'),
     path('search/',account_search_view,name='search'),
     path('search_page',search_page_view,name='search_page'),

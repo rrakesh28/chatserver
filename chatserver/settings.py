@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'account',
     'personal',
     'friend',
+    'post',
 
     'django.contrib.admin',
     'django.contrib.auth',

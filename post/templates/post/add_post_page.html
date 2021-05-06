@@ -1,0 +1,23 @@
+{% extends 'personal/home.html' %}
+
+{% block content %}
+
+<style type="text/css">
+	input[type='submit']{
+		background-color: #0095F6;
+		border: 0px;
+		color: white;
+		border-radius: 10px;
+		width: 50px;
+		height: 30px;
+	}
+</style>
+<div style="margin: 10px;">
+	<p style="font-family: 'Roboto', sans-serif;">New Post</p>
+
+	<form style="margin-left: 20px;" method="POST" action="/add_post/">{% csrf_token %}
+		<textarea row="20" cols="10" style="width: 70vw; height: 100px;" name='post_data'></textarea><br>
+		<input type="submit" value="post">
+	</form>
+</div>
+{% endblock content %}

@@ -9,10 +9,6 @@
 		display: inline;
 	}
 
-	.profile_image{
-
-	}
-
 	.request{
 		width: 80vw;
 		box-shadow: 10px 10px 9px rgba(225,225,225,.3);
@@ -42,22 +38,41 @@
 
 	<p>Requests</p>
 	<div class="profile-view">
-		<div class="request"> 
-			<a href="">
-				<div class="profile-panel">
-					<a href="#"><img src="{{request.user.profile_image.url}}" class="profile_image"></a>
+		{% if friend_requests %}
 
-					<p style="font-family: 'Roboto', sans-serif;">{{request.user.username}}</p>
+		{% for request in friend_requests %}
+		<div class="request"> 
+			<a href="{% url 'account:view' user_id=request.sender.id%}">
+				<div class="profile-panel">
+					<a href="#"><img src="{{request.sender.profile_image.url}}" class="profile_image"></a>
+
+					<p style="font-family: 'Roboto', sans-serif;">{{request.sender.username}}</p>
 				</div>
 			</a>
 
 			<div style="display: flex; margin-top: 20px;">
-				<button style="border: 0px; width: 40px; height: 40px; background-color: red; border-radius: 50%; margin-right: 5px;"><span style="color: white;" class="material-icons-outlined">close</span></button>
-				<button style="width: 40px; height: 40px; border: 0px; background-color: #0095F6; border-radius: 50%;"><span style="color: white;" class="material-icons-outlined">done</span></button>
+				<button onclick='triggerDeclineFriendRequest("{{request.id}}")' style="border: 0px; width: 40px; height: 40px; background-color: red; border-radius: 50%; margin-right: 5px;"><span style="color: white;" class="material-icons-outlined">close</span></button>
+				<button onclick='triggerAcceptFriendRequest("{{request.id}}")' style="width: 40px; height: 40px; border: 0px; background-color: #0095F6; border-radius: 50%;"><span style="color: white;" class="material-icons-outlined">done</span></button>
 			</div>
 		</div>
-
-
+		{% endfor %}
+		{% endif %}
 	</div>
 </div>
+
+<script type="text/javascript">
+	function onFriendRequestAccept(){
+		location.reload();
+	}
+
+	function onFriendRequestDecline(){
+		location.reload();
+	}
+
+	function triggerAcceptFriendRequest(frined_request_id){
+		acceptFriendRequest(frined_request_id, onFriendRequestAccept)
+	}
+</script>
+
+{% include 'friend/snippets/accept_friend_request.html' %}
 {% endblock content %}

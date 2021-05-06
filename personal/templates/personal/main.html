@@ -30,6 +30,33 @@
 	.general-notification span,.chat-notification span{
 		font-size: 25px;
 	}
+
+	.post-container{
+		width: 90vw;
+		margin-left: 5vw;
+		padding: 3px;
+	}
+
+	.post{
+		padding: 10px;
+		margin-top: 20px;
+		background-color: rgba(0,0,0,.1);
+		border-radius: 20px;
+	}
+
+	.post a{
+		text-decoration: none;
+		color: black;
+		font-family: 'Roboto', sans-serif;
+		position: relative;
+		top: 0px;
+		font-size: 13px;
+	}
+
+	.post-content{
+		padding: 1px;
+	}
+
 </style>
 
 <div class="mobile-view-header">
@@ -40,5 +67,23 @@
             <div class="chat-notification"><span class="material-icons-outlined">chat</span></div>
         </div>
 </div>
+
+{% if posts %}
+<div class="post-container">
+	{% for post in posts %}
+		<div class="post">
+
+			<div class="profile-link">
+				<a href="{' url 'account:view' user_id=post.creator.id %}"><img style="widht:30px; height:30px; border-radius:50%;" src="{{post.creator.profile_image.url}}"></a>
+				<a href="{% url 'account:view' user_id=post.creator.id %}">{{post.creator.username}}</a>
+			</div>
+
+			<div style="background-color:white; border-radius: 10px;" class="post-content">
+				<p style="font-family: 'Open Sans', sans-serif; font-size: 12px;">{{post.content}}</p>
+			</div>
+		</div>
+	{% endfor %}
+</div>
+{% endif %}
 
 {% endblock content%}

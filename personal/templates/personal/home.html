@@ -10,7 +10,9 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
     <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@600&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap" rel="stylesheet"> 
 
     <link rel="stylesheet" href="{% static 'cropperjs/dist/cropper.min.css' %}">
     <title>Document</title>
@@ -43,6 +45,11 @@
             height: 100%;
             position: fixed;
             right: 0px;
+        }
+
+        a{
+            -webkit-tap-highlight-color: transparent;
+            
         }
 
         @media (max-width: 420px){
@@ -105,6 +112,7 @@
         <div class="mobile-view-menu">
             <a href="/"><span class="material-icons" style="color: white;">home</span></a>
             <a href="{% url 'search_page' %}"><span class="material-icons" style="color: white;">search</span></a>
+            <a href="{% url 'post_page' %}"><span class="material-icons-outlined" style="color: white;">add_circle_outline</span></a>
             <a href="{% url 'account:view' user_id=request.user.id %}"><span class="material-icons" style="color: white;">person</span></a>
             <a href="{% url 'logout' %}"><span class="material-icons" style="color: white;">logout</span></a>
         </div>
