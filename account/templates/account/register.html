@@ -128,6 +128,23 @@
             }
         }
     </style>
+
+    <script type="text/javascript">
+        function toggle(){
+            var x = document.getElementById("inputPassword1");
+            var y = document.getElementById("inputPassword2");
+
+            if(x.type == "password"){
+                x.type = "text"
+                y.type = "text"
+            }
+
+            else{
+                x.type = "password"
+                y.type = "password"
+            }
+        }
+    </script>
 </head>
 
 <body>
@@ -148,12 +165,14 @@
                         placeholder="Enter a username" required>
 
                     <p class="font">Password</p>
-                    <input type="password" name="password1" id="inputPassword" class="form-control"
+                    <input type="password" name="password1" id="inputPassword1" class="form-control"
                         placeholder='Enter your password' required>
 
                     <p class="font">Confirm Password</p>
-                    <input type="password" name="password2" id="inputPassword" class="form-control"
+                    <input type="password" name="password2" id="inputPassword2" class="form-control"
                         placeholder='Enter your password' required><br>
+
+                    <input type="checkbox" onclick="toggle()"><span style="font-family: 'Roboto", sans-sareif;>Show Password</span>
 
                     {% for field in registration_form %}
                     <p>

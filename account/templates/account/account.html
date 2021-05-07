@@ -51,13 +51,16 @@
 		.details{
 			 font-family: 'Roboto', sans-serif;
 			 position: absolute;
-			 left: 40%;
 			 margin-top: 75px;
+			 display: flex;
+			 justify-content: center;
+			 flex-direction: column;
 		}
 
 		.details p{
 			font-style: bold;
 			font-size: 17px;
+			width: 100vw;
 		}
 
 		.friend-system{
@@ -83,6 +86,11 @@
 			transform: translate(-50%, 0%);
 		}
 
+		.username{
+			display: flex;
+			justify-content: center;
+		}
+
 	</style>
 
 <div class="mobile-view">
@@ -99,8 +107,9 @@
 			<img src="{{profile_image}}" alt="" class="profile-pic" id="id_profile_image_display">
 		</div>
 
-		<div class="details">
+		<div class="details" >
 			<p class="username" id="id_username">{{username}}</p>
+			<p>{{email}}</p>
 		</div>
 	</div>
 

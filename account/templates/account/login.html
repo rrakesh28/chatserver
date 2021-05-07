@@ -142,6 +142,20 @@
             }
         }
     </style>
+
+    <script type="text/javascript">
+    function toggle(){
+        var x = document.getElementById("inputPassword");
+
+        if(x.type == "password"){
+            x.type = "text"
+        }
+
+        else{
+            x.type = "password"
+        }
+    }
+</script>
 </head>
 
 <body>
@@ -161,6 +175,8 @@
                     <p class="password" style="font-family: 'Roboto', sans-serif;">Password</p>
                     <input type="password" name="password" id="inputPassword" class="form-control"
                         placeholder='Enter your password' required><br>
+
+                    <input type="checkbox" onclick="toggle()"><span style="font-family: 'Roboto', sans-serif;">Show Pasword</span>
 
                     {% for field in login_form %}
                     <p>
