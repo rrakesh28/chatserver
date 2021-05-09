@@ -38,9 +38,9 @@ def login_view(request,*args,**kwargs):
 
             if user:
                 login(request, user)
-                if destination:
-                    return redirect(destination)
                 return redirect('home')
+            else:
+                context['error'] = 'Invalid Login'
     else:
         form = AccountAuthenticationForm()
     
@@ -167,11 +167,16 @@ def account_search_view(request,*args,**kwargs):
         if len(search_query) > 0:
             search_results = Account.objects.filter(username__icontains=search_query).distinct()
             accounts = []
-            print("Search results ", search_results)
-            for account in search_results:
-                accounts.append((account,False))
-                print("accounts ", account)
-            context['accounts'] = accounts
+
+            if user.is_authenticated:
+                auth_user_friend_list = FriendList.objects.get(user=user)
+                for account in search_results:
+                    accounts.append((account, auth_user_friend_list.is_mutual_friedn(account)))
+                context['accounts'] = accounts
+            else:
+                for account in search_results:
+                    accounts.append((account,False))
+                context['accounts'] = accounts
     return render(request,'account/search_results.html',context)
 
 def edit_account_view(request,*args,**kwargs):

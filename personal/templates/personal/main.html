@@ -35,6 +35,8 @@
 		width: 90vw;
 		margin-left: 5vw;
 		padding: 3px;
+		display: inline-block;
+		margin-bottom: 50px;
 	}
 
 	.post{
@@ -74,7 +76,7 @@
 		<div class="post">
 
 			<div class="profile-link">
-				<a href="{' url 'account:view' user_id=post.creator.id %}"><img style="widht:30px; height:30px; border-radius:50%;" src="{{post.creator.profile_image.url}}"></a>
+				<a href="{' url 'account:view' user_id=post.creator.id %}"><img style="width:30px; height:30px; border-radius:50%;" src="{{post.creator.profile_image.url}}"></a>
 				<a href="{% url 'account:view' user_id=post.creator.id %}">{{post.creator.username}}</a>
 			</div>
 

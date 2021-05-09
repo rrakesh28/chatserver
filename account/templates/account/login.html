@@ -81,7 +81,7 @@
         }
 
         input[type='submit']::value {
-            font-color: white;
+            color: white;
         }
 
         .password_reset {
@@ -106,19 +106,17 @@
             .container{
                 margin-left: 0px;
                 height: 80vh;
+                margin-top: 50%;
+                transform: translateY(-20%);
             }
 
             .title{
-                margin-top: 10px;
-            }
-
-            .heading{
-                font-size: 20px;
-                margin-top: 10px;
+                margin-left: 50%;
+                transform: translate(-30%,0%);
             }
 
             .email{
-                margin-top: 20px;
+                margin-top: 10px;
                 font-size: 15px;
             }
 
@@ -128,17 +126,19 @@
 
             input[type='text'],
             input[type='password'] {
-                width: 200px;
+                width: 80vw;
                 height: 35px;
+                margin-top: -10px;
             }
 
             input[type="submit"]{
-                width: 200px;
+                width: 80vw;
                 height: 35px;
+                margin-top: -10px;
             }
 
             .form-login{
-                margin-left: calc(50vw - 120px);
+                margin-left: 10vw;
             }
         }
     </style>
@@ -165,8 +165,6 @@
             <div class="container">
                 <p class="title">Together</p>
 
-                <h1 class="heading">Login in into your account</h1>
-
                 <form class='form-login' method="POST">{% csrf_token %}
                     <p class="email" style="font-family: 'Roboto', sans-serif; font-style:bold;">Email address</p>
                     <input type="text" name="email" id="inputEmail" class="form-control" placeholder='Enter your email'
@@ -189,6 +187,10 @@
                     <div style="color: red">
                         <p>{{registration_form.non_field_errors}}</p>
                     </div>
+                    {% endif %}
+
+                    {% if error %}
+                    <p style="color: red;">{{error}}</p>
                     {% endif %}
 
                     <input type="submit" value="Login"><br>

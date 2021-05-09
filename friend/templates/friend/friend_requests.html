@@ -72,7 +72,12 @@
 	function triggerAcceptFriendRequest(frined_request_id){
 		acceptFriendRequest(frined_request_id, onFriendRequestAccept)
 	}
+
+	function triggerDeclineFriendRequest(frined_request_id){
+		declineFriendRequest(frined_request_id, onFriendRequestDecline)
+	}
 </script>
 
 {% include 'friend/snippets/accept_friend_request.html' %}
+{% include 'friend/snippets/decline_friend_request.html' %}
 {% endblock content %}

@@ -65,7 +65,7 @@
 
 		.friend-system{
 			margin-top: 120px;
-			margin-left: 20px
+			margin-left: 20px;
 			width: 70vw;	
 			display: flex;
 			justify-content: space-evenly;	
@@ -90,7 +90,6 @@
 			display: flex;
 			justify-content: center;
 		}
-
 	</style>
 
 <div class="mobile-view">
@@ -109,15 +108,14 @@
 
 		<div class="details" >
 			<p class="username" id="id_username">{{username}}</p>
-			<p>{{email}}</p>
 		</div>
 	</div>
 
 	{% if request.user.is_authenticated %}
 	<div class="friend-system">
 
-		{% if is_self %}
-		<a href=""><button style="background-color: #0095F6;" ><span style="color: white;" class="material-icons-outlined">people</span></button></a>
+		{% if is_self or is_friend %}
+		<a href="{% url 'friend:list' user_id=id %}"><button style="background-color: #0095F6;" ><span style="color: white;" class="material-icons-outlined">people</span></button></a>
 		{% endif %}
 
 		{% if friend_requests %}
@@ -131,7 +129,7 @@
 			{% endif %}
 
 			{% if request_sent == -1%} <!-- #if i sent to them -->
-			<a href=""><button><span style = "color: white;" class="material-icons-outlined">person_remove</span></button></a>
+			<button id="id_cancel_friend_request_btn" style="background-color: rgba(0,0,0,.5);"><span style = "color: white;" class="material-icons-outlined">person_remove</span></button>
 			{% endif %}
 
 		{% endif %}
@@ -150,8 +148,8 @@
 		<p style="font-family: 'Roboto', sans-serif;">{{username}} sent a friend request </p>
 
 		<div style="display: flex;justify-content: center;">
-			<button onclick='onFriendRequestAccept("{{id}}")' style="background-color: #0095F6"><span style="color: white;" class="material-icons-outlined">done</span></button>
-			<button onclick='onFriendRequestDecline("{{id}}")' style="background-color: red;"><span style="color: white;" class="material-icons-outlined">close</span></button>
+			<button onclick='triggerAcceptFriendRequest("{{pending_friend_request_id}}")' style="background-color: #0095F6"><span style="color: white;" class="material-icons-outlined">done</span></button>
+			<button onclick='triggerDeclineFriendRequest("{{pending_friend_request_id}}")' style="background-color: red;"><span style="color: white;" class="material-icons-outlined">close</span></button>
 		</div>
 	</div>
 	{% endif %}
@@ -176,8 +174,16 @@
 		location.reload();
 	}
 
+	function onFriendRequestCancelled(){
+		location.reload();
+	}
+
 	function triggerAcceptFriendRequest(frined_request_id){
 		acceptFriendRequest(frined_request_id, onFriendRequestAccept)
+	}
+
+	function triggerDeclineFriendRequest(frined_request_id){
+		declineFriendRequest(frined_request_id, onFriendRequestDecline)
 	}
 
 
@@ -187,6 +193,14 @@
 			sendFriendRequest("{{id}}", onFriendRequestSent)
 		})
 	}
+
+	var cancelFriendRequestBtn = document.getElementById("id_cancel_friend_request_btn")
+	if(cancelFriendRequestBtn != null){
+		cancelFriendRequestBtn.addEventListener("click", function(){
+			cancelFriendRequest("{{id}}", onFriendRequestCancelled)
+		})
+	}
+
 
 	var removeFriendBtn = document.getElementById("id_unfriend_btn")
 	if (removeFriendBtn != null){
@@ -199,5 +213,8 @@
 
 {% include 'friend/snippets/send_friend_requests.html' %}
 {% include 'friend/snippets/remove_friend.html' %}
+{% include 'friend/snippets/decline_friend_request.html' %}
+{% include 'friend/snippets/accept_friend_request.html' %}
+{% include 'friend/snippets/cancel_friend_request.html' %}
 
 {% endblock content %}

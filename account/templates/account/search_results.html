@@ -22,16 +22,6 @@
         	font-family: 'Roboto', sans-sareif;
         }
 
-        .send-message{
-        	font-family: 'Roboto', sans-sareif;
-        	background-color: #198CFA;
-        	height: 30px;
-        	width: 70px;
-        	border-radius: 10px;
-        	border: 0px;
-        	margin-top: 5px;
-        }
-
         a{
         	text-decoration: none;
         	color: black;
@@ -46,7 +36,6 @@
 
 	    <div style="display: flex; flex-direction: column; margin-left: 10px;">
 	    	<a href="{% url 'account:view' user_id=account.0.id %}"><span class="username-view">{{account.0.username}}</span></a>
-	    	<button class="send-message">Message</button>
 	    </div>
 	</div>
 	{% endfor %}

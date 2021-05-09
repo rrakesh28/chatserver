@@ -1,0 +1,56 @@
+{% extends 'personal/home.html' %}
+
+{% block content %}
+
+<style type="text/css">
+	.profile-view{
+        	display: flex;
+        	flex-direction: row;
+        	position: relative;
+        	top: 20px;
+        	width: 80vw;
+
+        }
+
+        .profile_image{
+        	width: 65px;
+        	height: 65px;
+        	border-radius: 10px;
+        }
+
+        .username-view{
+        	font-family: 'Roboto', sans-sareif;
+        }
+
+        .send-message{
+        	font-family: 'Roboto', sans-sareif;
+        	background-color: #198CFA;
+        	height: 30px;
+        	width: 70px;
+        	border-radius: 10px;
+        	border: 0px;
+        	margin-top: 5px;
+        }
+
+        a{
+        	text-decoration: none;
+        	color: black;
+        }
+</style>
+
+<p style="font-family: 'Roboto', sans-sareif; margin-left: 20px;">Your Friends</p>
+
+{% if friends %}
+<div style="display: flex; flex-direction: column; margin-left: 20px;">
+	{% for friend in friends%}
+	<div class="profile-view">
+	    <a href="{% url 'account:view' user_id=friend.0.id%}"><img src="{{friend.0.profile_image.url}}" class="profile_image"></a>
+
+	    <div style="display: flex; flex-direction: column; margin-left: 10px;">
+	    	<a href="{% url 'account:view' user_id=friend.0.id %}"><span class="username-view">{{friend.0.username|truncatechars:50}}</span></a>
+	    </div>
+	</div>
+	{% endfor %}
+</div>
+{% endif %}
+{% endblock content %}
