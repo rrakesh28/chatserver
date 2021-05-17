@@ -66,7 +66,7 @@
 
         <div class="notification-chat-container">
             <div class="general-notification"><span class="material-icons-outlined">notifications</span></div>
-            <div class="chat-notification"><span class="material-icons-outlined">chat</span></div>
+            <a href="{% url 'chat:room' room_name='public' %}"><div class="chat-notification"><span class="material-icons-outlined">chat</span></div></a>
         </div>
 </div>
 

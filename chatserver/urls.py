@@ -35,10 +35,12 @@ from post.views import(
     add_post,
 )
 
+
 urlpatterns = [
     path('',home_view,name='home'),
     path('admin/', admin.site.urls),
     path('account/',include('account.urls',namespace='account')),
+    path('chat/', include('chat.urls', namespace='chat')),
     path('friend/',include('friend.urls',namespace='friend')),
     path('login/',login_view,name='login'),
     path('logout/',logout_view,name='logout'),
