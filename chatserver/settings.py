@@ -11,8 +11,6 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
-import django_heroku
-import dj_database_url
 from decouple import config
 import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,7 +26,7 @@ SECRET_KEY = 'django-insecure-svmsqn&9_s4u!na_hr7$cdm3^8il9y_gnfxd*xl-(gi-&h5b_#
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*localhost','aminoz-together']
+ALLOWED_HOSTS = ['*']
 
 AUTH_USER_MODEL = "account.Account"
 
@@ -60,7 +58,6 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'chatserver.urls'
@@ -136,7 +133,7 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
+ 
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -155,15 +152,10 @@ TEMP = os.path.join(BASE_DIR,'./temp')
 
 STATIC_URL = '/static/'
 
-BASE_URL = 'https://aminoz-together'
-
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-STATICFIELS_STORAGE = 'whitenoise.storage.CompressedManifestStaicFilesStorage'
-django_heroku.settings(locals())
 
 DATA_UPLOAD_MAX_MEMROY_SIZE = 1
 
